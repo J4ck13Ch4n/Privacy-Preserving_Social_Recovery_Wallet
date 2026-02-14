@@ -55,7 +55,6 @@ describe("ZKSRP System Test", function () {
 
         const policy = await socialRecoveryVault.policyInfo(policyId);
         expect(policy.owner).to.equal(owner.address);
-        // policy.exists check removed as it is not returned by policyInfo
     });
 
     it("3. Should update Merkle Root (Commitment Batch)", async function () {

@@ -8,7 +8,7 @@ include "circomlib/circuits/switcher.circom";
 template MerkleTreeInclusionProof(nLevels) {
     // Private inputs
     signal input leaf;
-    signal input leaf_index_bits[nLevels];  // Bits của leaf index để xác định left/right
+    signal input leaf_index_bits[nLevels];  // Leaf index bits to determine path direction (0=Left, 1=Right)
     signal input siblings[nLevels];
     
     // Public inputs
@@ -22,7 +22,7 @@ template MerkleTreeInclusionProof(nLevels) {
     switchers[0] = Switcher();
     switchers[0].L <== leaf;
     switchers[0].R <== siblings[0];
-    switchers[0].sel <== leaf_index_bits[0];  // If bit=1, swap to [sibling, leaf]
+    switchers[0].sel <== leaf_index_bits[0];
     
     hash_components[0] = Poseidon(2);
     hash_components[0].inputs[0] <== switchers[0].outL;
@@ -46,8 +46,8 @@ template MerkleTreeInclusionProof(nLevels) {
 
 template GuardianApproval(nLevels) {
     // Private inputs from guardian
-    signal input guardian_address; // used as key (masked to 5 bits for tree position)
-    signal input shared_secret;    // used as value
+    signal input guardian_address; 
+    signal input shared_secret;
     // Merkle siblings
     signal input siblings[nLevels];
     // Bits of guardian_address (leaf index) for merkle path
@@ -93,4 +93,4 @@ template GuardianApproval(nLevels) {
     out_new_owner <== new_owner;
 }
 
-component main = GuardianApproval(20);
+component main {public [policy_id, recovery_request_id, merkle_root, new_owner]} = GuardianApproval(20);
