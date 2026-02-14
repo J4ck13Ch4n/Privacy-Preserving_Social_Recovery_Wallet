@@ -1,4 +1,4 @@
-# ZKSRP Core Implementation
+# ZKSRP: Unlinkable Zero-Knowledge Social Recovery Protocol for Smart Contract Wallets
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
